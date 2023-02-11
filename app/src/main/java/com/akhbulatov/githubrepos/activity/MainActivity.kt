@@ -13,12 +13,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
         navigateRepositoriesFragment()
 
-        Log.d("MainActivity","onCreate")
+        Log.d("MainActivity","Был вызван onCreate")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity","onDestroy")
+        Log.d("MainActivity","был вызван onDestroy")
     }
 
     private fun navigateRepositoriesFragment() {
