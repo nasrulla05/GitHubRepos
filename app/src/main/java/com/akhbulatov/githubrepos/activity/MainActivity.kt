@@ -9,16 +9,17 @@ import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.fragments.RepositoriesFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigateRepositoriesFragment()
 
-        Log.d("MainActivity","Был вызван onCreate")
+        Log.d("MainActivity", "Был вызван onCreate")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity","был вызван onDestroy")
+        Log.d("MainActivity", "был вызван onDestroy")
     }
 
     private fun navigateRepositoriesFragment() {
@@ -31,5 +32,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         transaction.replace(R.id.fragment, fragment)
         transaction.commit()
     }
-
 }
