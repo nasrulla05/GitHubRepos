@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         Log.d("MainActivity", "был вызван onDestroy")
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.d("MainActivity","был вызван onStart")
+    }
+
     private fun navigateRepositoriesFragment() {
         val fragment = RepositoriesFragment()
         navigateFragment(fragment)
