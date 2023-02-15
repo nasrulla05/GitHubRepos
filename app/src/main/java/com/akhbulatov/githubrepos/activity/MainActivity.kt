@@ -36,6 +36,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun navigateRepositoriesFragment() {
+        // Выполняем переход на экран списка репозиториев
+
         val fragment = RepositoriesFragment()
         navigateFragment(fragment)
     }
