@@ -22,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+// Экран списка репозиториев
 class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
 
     val repositoryAdapter = RepositoryAdapter(
@@ -138,9 +139,9 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
                     )
                     val repositoriesEditor: String? =
                         sharedPreferences.getString("repositories", null)
-                  val repositoriesInt =  repositoriesEditor!!.toInt()
+                    val repositoriesInt = repositoriesEditor!!.toInt()
 
-                 val takeList : List<Repository> = repositoriesList!!.take(repositoriesInt)
+                    val takeList: List<Repository> = repositoriesList!!.take(repositoriesInt)
                     repositoryAdapter.repositoriesList = takeList!!.toMutableList()
                     repositoryAdapter.notifyDataSetChanged()
                 }
