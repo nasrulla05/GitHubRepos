@@ -10,6 +10,7 @@ import com.akhbulatov.githubrepos.fragments.RepositoriesFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    // Вызывается при создании Activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigateRepositoriesFragment()
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         Log.d("MainActivity", "Был вызван onCreate")
     }
 
+    // Вызывается при уничтожении экрана
     override fun onDestroy() {
         super.onDestroy()
         Log.d("MainActivity", "был вызван onDestroy")
@@ -24,12 +26,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onStart() {
         super.onStart()
-        Log.d("MainActivity","был вызван onStart")
+        Log.d("MainActivity", "был вызван onStart")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("MainActivity","Был вызван onStop")
+        Log.d("MainActivity", "Был вызван onStop")
     }
 
     private fun navigateRepositoriesFragment() {
