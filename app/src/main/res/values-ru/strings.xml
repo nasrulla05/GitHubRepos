@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GithubRepos</string>
+    <string name="repositories">Репозитории</string>
+    <string name="sort">Сортировать</string>
+
+    <string-array name="repositories_list_sorting">
+        <item>По умолчанию</item>
+        <item>По названию</item>
+    </string-array>
+
+    <string name="featured_authors">Избранные авторы</string>
+    <string name="about_app">О приложении</string>
+    <string name="settings">Настройки</string>
+
+</resources>

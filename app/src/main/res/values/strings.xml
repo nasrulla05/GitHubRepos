@@ -1,18 +1,16 @@
 <resources>
     <string name="app_name">GithubRepos</string>
-    <string name="repositories">Репозитории</string>
-    <string name="sort">Сортировать</string>
+    <string name="repositories">Repositories</string>
+    <string name="sort">Sort</string>
 
 
-    
     <string-array name="repositories_list_sorting">
-        <item>По умолчанию</item>
-        <item>По названию</item>
+        <item>Default</item>
+        <item>By name</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="featured_authors">Избранные авторы</string>
-    <string name="about_app">О приложении</string>
-    <string name="settings">Настройки</string>
+
+    <string name="featured_authors">Featured authors</string>
+    <string name="about_app">About app</string>
+    <string name="settings">Settings</string>
 
 </resources>
