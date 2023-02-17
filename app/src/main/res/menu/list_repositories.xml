@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/featured_authors"
-        android:title="Избранные авторы" />
+        android:title="@string/featured_authors" />
     <item
         android:id="@+id/about_the_application"
-        android:title="О приложении" />
+        android:title="@string/about_app" />
     <item
         android:id="@+id/settings"
-        android:title="Настройки" />
+        android:title="@string/settings" />
 </menu>

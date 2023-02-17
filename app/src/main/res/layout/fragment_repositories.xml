@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#2196F3"
-            app:title="Репозитории"
+            app:title="@string/repositories"
             app:titleTextColor="@color/white" />
 
         <LinearLayout
@@ -39,7 +39,7 @@
                 android:layout_marginTop="9dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:text="Сортировка"
+                android:text="@string/sort"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
 
