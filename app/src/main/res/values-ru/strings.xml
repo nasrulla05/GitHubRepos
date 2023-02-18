@@ -6,14 +6,17 @@
     <string name="author">Автор:Ахбулатов Насрулла</string>
     <string name="ear">2023 г.</string>
     <string name="authors_search">поиск авторов</string>
+    <string name="featured_authors">Избранные авторы</string>
+    <string name="about_app">О приложении</string>
+    <string name="settings">Настройки</string>
+    <string name="mistakes">ошибки</string>
+
+
+
 
     <string-array name="repositories_list_sorting">
         <item>По умолчанию</item>
         <item>По названию</item>
     </string-array>
-
-    <string name="featured_authors">Избранные авторы</string>
-    <string name="about_app">О приложении</string>
-    <string name="settings">Настройки</string>
-
+    
 </resources>

@@ -6,6 +6,7 @@
     <string name="author">Author:Akhbulatov Nasrulla</string>
     <string name="ear">2023 ear</string>
     <string name="authors_search">authors search</string>
+    <string name="mistakes">mistakes</string>
 
     <string-array name="repositories_list_sorting">
         <item>Default</item>
