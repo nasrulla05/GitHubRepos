@@ -10,6 +10,7 @@
     <string name="are_common">are common</string>
     <string name="number_of_displayed_repositories">number of displayed repositories</string>
     <string name="save">save</string>
+    <string name="settings_have_been_saved">Settings have been saved</string>
 
 
     <string-array name="repositories_list_sorting">

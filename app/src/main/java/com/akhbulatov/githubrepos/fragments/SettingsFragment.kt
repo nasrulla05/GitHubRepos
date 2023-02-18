@@ -57,7 +57,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         val snackbar = Snackbar.make(
             requireView(),
-            "Настройки сохранены",
+            R.string.settings_have_been_saved,
             Snackbar.LENGTH_LONG
         )
         snackbar.show()
