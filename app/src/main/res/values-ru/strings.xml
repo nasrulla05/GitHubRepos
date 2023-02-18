@@ -10,6 +10,10 @@
     <string name="about_app">О приложении</string>
     <string name="settings">Настройки</string>
     <string name="mistakes">ошибки</string>
+    <string name="are_common">общие</string>
+     <string name="number_of_displayed_repositories">количество отображаемых репозиториев</string>
+    <string name="save">сохранить</string>
+
 
 
 

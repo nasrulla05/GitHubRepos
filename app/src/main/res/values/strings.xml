@@ -7,6 +7,10 @@
     <string name="ear">2023 ear</string>
     <string name="authors_search">authors search</string>
     <string name="mistakes">mistakes</string>
+    <string name="are_common">are common</string>
+    <string name="number_of_displayed_repositories">number of displayed repositories</string>
+    <string name="save">save</string>
+
 
     <string-array name="repositories_list_sorting">
         <item>Default</item>

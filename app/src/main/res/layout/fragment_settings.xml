@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/blue"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-        app:title="Настройки"
+        app:title="@string/settings"
         app:titleTextColor="@color/white" />
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Общие"
+            android:text="@string/are_common"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="Кол-во отображаемых репозиториев"
+            android:text="@string/number_of_displayed_repositories"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -62,6 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue"
-        android:text="Сохранить" />
+        android:text="@string/save" />
 
 </LinearLayout>
