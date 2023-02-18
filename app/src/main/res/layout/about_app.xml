@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/blue"
         app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-        app:title="О приложеии"
+        app:title="@string/about_app"
         app:titleTextColor="@color/white" />
 
     <LinearLayout
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="Неофициальный клиент для GitHub"
+            android:text="@string/unofficial_client"
             android:textColor="#666666"
             android:textSize="16dp" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:text="Автор: Ахбулатов Насрулла"
+            android:text="@string/author"
             android:textColor="#666666"
             android:textSize="16dp" />
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:text="2023 г."
+            android:text="@string/ear"
             android:textColor="#666666" />
 
     </LinearLayout>

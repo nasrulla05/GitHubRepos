@@ -2,6 +2,10 @@
     <string name="app_name">GithubRepos</string>
     <string name="repositories">Репозитории</string>
     <string name="sort">Сортировать</string>
+    <string name="unofficial_client">Неофициальный клиент для GitHub</string>
+    <string name="author">Автор:Ахбулатов Насрулла</string>
+    <string name="ear">2023 г.</string>
+    <string name="authors_search">поиск авторов</string>
 
     <string-array name="repositories_list_sorting">
         <item>По умолчанию</item>

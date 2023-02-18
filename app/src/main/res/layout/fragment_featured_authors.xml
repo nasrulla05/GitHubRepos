@@ -30,7 +30,7 @@
                 android:id="@+id/author_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Поиск автора"/>
+                android:hint="@string/authors_search"/>
 
         </LinearLayout>
 
