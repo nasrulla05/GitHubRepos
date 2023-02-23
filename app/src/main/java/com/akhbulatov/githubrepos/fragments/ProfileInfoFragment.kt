@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.fragment.app.Fragment
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
+import com.akhbulatov.githubrepos.databinding.FragmentProfileInfoBinding
 import com.akhbulatov.githubrepos.models.FavoritesAuthors
 import com.akhbulatov.githubrepos.models.ProfileInfo
 import com.akhbulatov.githubrepos.network.FavoritesAuthorsDao
@@ -21,20 +20,21 @@ import retrofit2.Response
 
 class ProfileInfoFragment :
     Fragment(R.layout.fragment_profile_info) {
+    var binding : FragmentProfileInfoBinding? = null
 
     lateinit var getInfoAboutDetails: Call<ProfileInfo>
     var responseInfo: ProfileInfo? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentProfileInfoBinding.bind(view)
 
-        val toolbar: Toolbar = view.findViewById(R.id.arrow_back_toolbar)
-        toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+        binding!!.arrowBackToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 requireActivity().supportFragmentManager.popBackStack()
             }
         })
-        toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
+        binding!!.arrowBackToolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.favorites == item.itemId) {
                     val authors = FavoritesAuthors(
@@ -74,31 +74,23 @@ class ProfileInfoFragment :
                         .load(responseInfo!!.avatarAva)
                         .into(avatar)
 
-                    toolbar.setTitle(responseInfo!!.login)
+                    binding!!.arrowBackToolbar.setTitle(responseInfo!!.login)
 
-                    val name: TextView = view.findViewById(R.id.full_name)
-                    name.setText(responseInfo!!.fullName)
+                    binding!!.fullName.setText(responseInfo!!.fullName)
 
-                    val login: TextView = view.findViewById(R.id.login)
-                    login.setText(responseInfo!!.login)
+                    binding!!.login.setText(responseInfo!!.login)
 
-                    val bio : TextView = view.findViewById(R.id.bio)
-                    bio.setText(responseInfo!!.bio)
+                    binding!!.bio.setText(responseInfo!!.bio)
 
-                    val location: TextView = view.findViewById(R.id.location)
-                    location.setText(responseInfo!!.location)
+                    binding!!.location.setText(responseInfo!!.location)
 
-                    val email: TextView = view.findViewById(R.id.gmail)
-                    email.setText(responseInfo!!.email)
+                    binding!!.gmail.setText(responseInfo!!.email)
 
-                    val followers: TextView = view.findViewById(R.id.followers)
-                    followers.setText("Подписчики: ${responseInfo!!.followers}")
+                    binding!!.followers.setText("Подписчики: ${responseInfo!!.followers}")
 
-                    val following: TextView = view.findViewById(R.id.following)
-                    following.setText("Подписки: ${responseInfo!!.following}")
+                    binding!!.following.setText("Подписки: ${responseInfo!!.following}")
 
-                    val publicRepos: TextView = view.findViewById(R.id.public_repos)
-                    publicRepos.setText(responseInfo!!.public_repos.toString())
+                    binding!!.publicRepos.setText(responseInfo!!.public_repos.toString())
 
                 }
             }
@@ -112,5 +104,10 @@ class ProfileInfoFragment :
                 snackbar.show()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

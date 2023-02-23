@@ -4,14 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
+import com.akhbulatov.githubrepos.databinding.FragmentRepositoryDetailsBinding
 import com.akhbulatov.githubrepos.models.RepositoryDetails
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -20,21 +18,22 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details) {
+    var binding : FragmentRepositoryDetailsBinding? = null
 
     lateinit var getRepositoriesDetails: Call<RepositoryDetails>
     var repositoryDetails: RepositoryDetails? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentRepositoryDetailsBinding.bind(view)
 
-        val toolbar: Toolbar = view.findViewById(R.id.arrow_back)
-        toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+        binding!!.arrowBack.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 requireActivity().supportFragmentManager.popBackStack()
             }
         })
 
-        toolbar.setOnMenuItemClickListener(object:Toolbar.OnMenuItemClickListener{
+        binding!!.arrowBack.setOnMenuItemClickListener(object:Toolbar.OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.share==item.itemId){
                     val intent = Intent()
@@ -47,8 +46,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
-        val linearLayout: LinearLayout = view.findViewById(R.id.linear_layout)
-        linearLayout.setOnClickListener(object : View.OnClickListener {
+        binding!!.linearLayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
                 val profileInfoFragment = ProfileInfoFragment()
@@ -80,34 +78,25 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
                repositoryDetails = response.body()
                 if (repositoryDetails != null) {
 
-                    val avatar: ImageView = view.findViewById(R.id.avatar)
                     Glide.with(this@RepositoryDetailsFragment)
                         .load(repositoryDetails!!.owner.avatar)
-                        .into(avatar)
+                        .into(binding!!.avatar)
 
-                    val toolbar: Toolbar = view.findViewById(R.id.arrow_back)
-                    toolbar.setTitle(repositoryDetails!!.name)
+                    binding!!.arrowBack.setTitle(repositoryDetails!!.name)
 
-                    val name: TextView = view.findViewById(R.id.name)
-                    name.setText(repositoryDetails!!.name)
+                    binding!!.name.setText(repositoryDetails!!.name)
 
-                    val login: TextView = view.findViewById(R.id.login)
-                    login.setText(repositoryDetails!!.owner.login)
+                    binding!!.login.setText(repositoryDetails!!.owner.login)
 
-                    val description: TextView = view.findViewById(R.id.description)
-                    description.setText(repositoryDetails!!.description)
+                    binding!!.description.setText(repositoryDetails!!.description)
 
-                    val link: TextView = view.findViewById(R.id.link)
-                    link.setText(repositoryDetails!!.link)
+                    binding!!.link.setText(repositoryDetails!!.link)
 
-                    val star: TextView = view.findViewById(R.id.star)
-                    star.setText(repositoryDetails!!.star)
+                    binding!!.star.setText(repositoryDetails!!.star)
 
-                    val reposts: TextView = view.findViewById(R.id.reposts)
-                    reposts.setText(repositoryDetails!!.reposts)
+                    binding!!.reposts.setText(repositoryDetails!!.reposts)
 
-                    val error: TextView = view.findViewById(R.id.error)
-                    error.setText(repositoryDetails!!.error)
+                    binding!!.error.setText(repositoryDetails!!.error)
                 }
             }
 
@@ -121,6 +110,11 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
 
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
 

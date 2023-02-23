@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ProgressBar
-import android.widget.Spinner
-import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.adapters.RepositoryAdapter
+import com.akhbulatov.githubrepos.databinding.FragmentRepositoriesBinding
 import com.akhbulatov.githubrepos.models.Repository
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
@@ -24,6 +21,7 @@ import retrofit2.Response
 
 // Экран списка репозиториев
 class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
+    var binding : FragmentRepositoriesBinding? = null
 
     val repositoryAdapter = RepositoryAdapter(
         repositoryListener = object : RepositoryAdapter.RepositoryListener {
@@ -50,9 +48,9 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentRepositoriesBinding.bind(view)
 
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
+        binding!!.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.featured_authors == item.itemId) {
                     val authors = FeaturedAuthorsFragment()
@@ -85,19 +83,13 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
             }
         })
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycleView)
-
-
         val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(divider)
+        binding!!.recycleView.addItemDecoration(divider)
 
-        recyclerView.adapter = repositoryAdapter
+        binding!!.recycleView.adapter = repositoryAdapter
         loadRepositories()
 
-        val spinner: Spinner = view.findViewById(R.id.spinner)
-
-
-        spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+        binding!!.spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -120,15 +112,14 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
 
 
     private fun loadRepositories() {
-        val progressBar: ProgressBar = requireView().findViewById(R.id.progressBar)
-        progressBar.visibility = View.VISIBLE
+        binding!!.progressBar.visibility = View.VISIBLE
 
         getRepositoryCall.clone().enqueue(object : Callback<List<Repository>> {
             override fun onResponse(
                 call: Call<List<Repository>>,
                 response: Response<List<Repository>>
             ) {
-                progressBar.visibility = View.GONE
+                binding!!.progressBar.visibility = View.GONE
                 if (response.isSuccessful) {
                     val repositoriesList: List<Repository>? = response.body()
                     // Получить кол-во отображаемых репозиториев из настроек
@@ -148,7 +139,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
             }
 
             override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
-                progressBar.visibility = View.GONE
+                binding!!.progressBar.visibility = View.GONE
 
                 val snackbar: Snackbar = Snackbar.make(
                     requireView(),
@@ -163,5 +154,10 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
     override fun onDestroy() {
         super.onDestroy()
         getRepositoryCall.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
