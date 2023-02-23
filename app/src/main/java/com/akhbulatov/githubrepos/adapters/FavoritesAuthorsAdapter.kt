@@ -3,10 +3,9 @@ package com.akhbulatov.githubrepos.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.akhbulatov.githubrepos.R
+import com.akhbulatov.githubrepos.databinding.ItemFeaturedAuthorsBinding
 import com.akhbulatov.githubrepos.models.FavoritesAuthors
 import com.bumptech.glide.Glide
 
@@ -16,10 +15,7 @@ class FavoritesAuthorsAdapter(val itemAuthorsListener: AuthorsListener) :
     var authors: List<FavoritesAuthors> = emptyList()
 
     class AuthorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val avatar: ImageView = itemView.findViewById(R.id.favorite_avatar)
-        val fullName: TextView = itemView.findViewById(R.id.favorites_full_name)
-        val electedLogin: TextView = itemView.findViewById(R.id.elected_login)
-        val delete: ImageView = itemView.findViewById(R.id.delete)
+        val binding : ItemFeaturedAuthorsBinding = ItemFeaturedAuthorsBinding.bind(itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthorsViewHolder {
@@ -33,12 +29,12 @@ class FavoritesAuthorsAdapter(val itemAuthorsListener: AuthorsListener) :
 
         Glide.with(holder.itemView)
             .load(authors.avatar)
-            .into(holder.avatar)
+            .into(holder.binding.favoriteAvatar)
 
-        holder.fullName.setText(authors.fullName)
-        holder.electedLogin.setText(authors.favoritesLogin)
+        holder.binding.favoritesFullName.setText(authors.fullName)
+        holder.binding.electedLogin.setText(authors.favoritesLogin)
 
-        holder.delete.setOnClickListener(object : View.OnClickListener {
+        holder.binding.delete.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 itemAuthorsListener.onDelete(authors)
             }
