@@ -11,6 +11,7 @@ import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.databinding.FragmentProfileInfoBinding
 import com.akhbulatov.githubrepos.models.FavoritesAuthors
 import com.akhbulatov.githubrepos.models.ProfileInfo
+import com.akhbulatov.githubrepos.models.RepositoryDetails
 import com.akhbulatov.githubrepos.network.FavoritesAuthorsDao
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -57,7 +58,7 @@ class ProfileInfoFragment :
             }
         })
 
-        val repositoryLogin: String = requireArguments().getString("login", "")
+        val repositoryLogin: String = requireArguments().getString(ARGUMENT_LOGIN, "")
         getInfoAboutDetails =
             GitHubReposApplication.gitHubService.getInfoUser(repositoryLogin)
 
@@ -109,5 +110,18 @@ class ProfileInfoFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    companion object{
+        const val ARGUMENT_LOGIN = "login"
+
+        fun createFragment(repositoryDetailsFragment: RepositoryDetails?): Fragment{
+            val profileInfoFragment = ProfileInfoFragment()
+            val bundle = Bundle()
+            bundle.putString(ARGUMENT_LOGIN,repositoryDetailsFragment!!.owner.login)
+            profileInfoFragment.arguments = bundle
+
+            return profileInfoFragment
+        }
     }
 }

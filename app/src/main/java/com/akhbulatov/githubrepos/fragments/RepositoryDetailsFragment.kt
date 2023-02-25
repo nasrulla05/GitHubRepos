@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.databinding.FragmentRepositoryDetailsBinding
+import com.akhbulatov.githubrepos.models.Repository
 import com.akhbulatov.githubrepos.models.RepositoryDetails
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -49,11 +50,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.linearLayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                val profileInfoFragment = ProfileInfoFragment()
-
-                val bundle = Bundle()
-                bundle.putString("login",repositoryDetails!!.owner.login)
-                profileInfoFragment.arguments = bundle
+                val profileInfoFragment = ProfileInfoFragment.createFragment(repositoryDetails)
 
                 val transaction: FragmentTransaction =
                     requireActivity().supportFragmentManager.beginTransaction()
@@ -64,7 +61,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
-        val repositoryId: Int = requireArguments().getInt("id", 0)
+        val repositoryId: Int = requireArguments().getInt(ARGUMENT_ID, 0)
         getRepositoriesDetails =
             GitHubReposApplication.gitHubService.getRepositoriesDetails(repositoryId)
 
@@ -115,6 +112,19 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    companion object{
+
+        const val ARGUMENT_ID = "id"
+        fun createFragment(repository: Repository): Fragment{
+            val fragmentDetails = RepositoryDetailsFragment()
+            val bundle = Bundle()
+            bundle.putInt(ARGUMENT_ID, repository.id)
+            fragmentDetails.arguments = bundle
+
+            return fragmentDetails
+        }
     }
 }
 

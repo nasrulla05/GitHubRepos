@@ -27,7 +27,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
         repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun repositoryClick(repository: Repository) {
 
-                val fragmentDetails = RepositoryDetailsFragment()
+                val fragmentDetails = RepositoryDetailsFragment.createFragment(repository)
 
                 val transaction: FragmentTransaction =
                     requireActivity().supportFragmentManager.beginTransaction()
@@ -35,9 +35,6 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-                val bundle = Bundle()
-                bundle.putInt("id", repository.id)
-                fragmentDetails.arguments = bundle
 
             }
         }
