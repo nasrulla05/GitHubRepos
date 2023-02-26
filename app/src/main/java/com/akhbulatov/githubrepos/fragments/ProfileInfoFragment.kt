@@ -115,10 +115,10 @@ class ProfileInfoFragment :
     companion object{
         const val ARGUMENT_LOGIN = "login"
 
-        fun createFragment(repositoryDetailsFragment: RepositoryDetails?): Fragment{
+        fun createFragment(repositoryDetails: RepositoryDetails?): Fragment{
             val profileInfoFragment = ProfileInfoFragment()
             val bundle = Bundle()
-            bundle.putString(ARGUMENT_LOGIN,repositoryDetailsFragment!!.owner.login)
+            bundle.putString(ARGUMENT_LOGIN,repositoryDetails!!.owner.login)
             profileInfoFragment.arguments = bundle
 
             return profileInfoFragment

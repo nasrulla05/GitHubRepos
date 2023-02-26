@@ -114,7 +114,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding = null
     }
 
-    companion object{
+    companion object{// Переменные и функции внутри вызываются БЕЗ создания объекта
 
         const val ARGUMENT_ID = "id"
         fun createFragment(repository: Repository): Fragment{
