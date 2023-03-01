@@ -5,8 +5,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.fragments.RepositoriesFragment
+import me.aartikov.alligator.NavigationContext
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -46,5 +48,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment, fragment)
         transaction.commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val navigatorContext : NavigationContext =
+            NavigationContext.Builder(this,GitHubReposApplication.navigatorFactory)
+                .fragmentNavigation(supportFragmentManager,R.id.fragment)
+                .build()
+        GitHubReposApplication.navigatorContextBinder.bind(navigatorContext)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GitHubReposApplication.navigatorContextBinder.unbind(this)
+    }
+
+    override fun onBackPressed() {
+        GitHubReposApplication.navigator.goBack()
     }
 }
