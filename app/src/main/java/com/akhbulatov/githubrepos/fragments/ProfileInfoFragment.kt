@@ -11,7 +11,6 @@ import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.databinding.FragmentProfileInfoBinding
 import com.akhbulatov.githubrepos.models.FavoritesAuthors
 import com.akhbulatov.githubrepos.models.ProfileInfo
-import com.akhbulatov.githubrepos.models.RepositoryDetails
 import com.akhbulatov.githubrepos.network.FavoritesAuthorsDao
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -32,7 +31,7 @@ class ProfileInfoFragment :
 
         binding!!.arrowBackToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.navigator.goBack()
             }
         })
         binding!!.arrowBackToolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
@@ -114,14 +113,5 @@ class ProfileInfoFragment :
 
     companion object{
         const val ARGUMENT_LOGIN = "login"
-
-        fun createFragment(repositoryDetails: RepositoryDetails?): Fragment{
-            val profileInfoFragment = ProfileInfoFragment()
-            val bundle = Bundle()
-            bundle.putString(ARGUMENT_LOGIN,repositoryDetails!!.owner.login)
-            profileInfoFragment.arguments = bundle
-
-            return profileInfoFragment
-        }
     }
 }
