@@ -39,8 +39,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.aartikov.Alligator:alligator:4.1.0'
-
     implementation "androidx.room:room-runtime:2.4.3"
     kapt "androidx.room:room-compiler:2.4.3"
 
