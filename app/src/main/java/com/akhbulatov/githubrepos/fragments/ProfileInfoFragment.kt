@@ -32,7 +32,7 @@ class ProfileInfoFragment :
 
         binding!!.arrowBackToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.router.exit()
             }
         })
         binding!!.arrowBackToolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {

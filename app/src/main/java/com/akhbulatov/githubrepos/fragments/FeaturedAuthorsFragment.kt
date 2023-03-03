@@ -34,7 +34,7 @@ class FeaturedAuthorsFragment : Fragment(R.layout.fragment_featured_authors) {
 
         binding!!.closeScreen.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.router.exit()
             }
         })
 

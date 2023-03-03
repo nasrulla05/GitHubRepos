@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.databinding.FragmentSettingsBinding
 import com.google.android.material.snackbar.Snackbar
@@ -18,7 +19,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding!!.settingsToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.router.exit()
             }
         })
 

@@ -3,12 +3,14 @@ package com.akhbulatov.githubrepos.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
-import com.akhbulatov.githubrepos.fragments.RepositoriesFragment
+import com.akhbulatov.githubrepos.Screens
+import com.github.terrakok.cicerone.androidx.AppNavigator
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    private var navigator = AppNavigator(this, R.id.fragment)
 
     // Вызывается при создании Activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +40,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun navigateRepositoriesFragment() {
         // Выполняем переход на экран списка репозиториев
 
-        val fragment = RepositoriesFragment()
-        navigateFragment(fragment)
+        GitHubReposApplication.router.replaceScreen(Screens.repositoriesFr())
     }
 
-    private fun navigateFragment(fragment: Fragment) {
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment, fragment)
-        transaction.commit()
+    override fun onResume() {
+        super.onResume()
+        GitHubReposApplication.navigateHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GitHubReposApplication.navigateHolder.removeNavigator()
     }
 }

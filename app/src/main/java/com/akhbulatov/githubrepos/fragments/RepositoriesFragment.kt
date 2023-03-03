@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
+import com.akhbulatov.githubrepos.Screens
 import com.akhbulatov.githubrepos.adapters.RepositoryAdapter
 import com.akhbulatov.githubrepos.databinding.FragmentRepositoriesBinding
 import com.akhbulatov.githubrepos.models.Repository
@@ -27,15 +27,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
         repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun repositoryClick(repository: Repository) {
 
-                val fragmentDetails = RepositoryDetailsFragment.createFragment(repository)
-
-                val transaction: FragmentTransaction =
-                    requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment, fragmentDetails)
-                transaction.addToBackStack(null)
-                transaction.commit()
-
-
+                GitHubReposApplication.router.navigateTo(Screens.repositoriesDetails(repository))
             }
         }
     )
@@ -50,31 +42,15 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
         binding!!.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.featured_authors == item.itemId) {
-                    val authors = FeaturedAuthorsFragment()
-
-                    val transaction: FragmentTransaction =
-                        requireActivity().supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragment, authors)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
+                    GitHubReposApplication.router.navigateTo(Screens.featuredAuthors())
                 } else
                     if (R.id.about_the_application == item.itemId) {
-                        val aboutApp = AboutAppFragment()
 
-                        val transaction: FragmentTransaction =
-                            requireActivity().supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.fragment, aboutApp)
-                        transaction.addToBackStack(null)
-                        transaction.commit()
+                        GitHubReposApplication.router.navigateTo(Screens.aboutApp())
                     } else
                         if (R.id.settings == item.itemId) {
-                            val settings = SettingsFragment()
 
-                            val transaction: FragmentTransaction =
-                                requireActivity().supportFragmentManager.beginTransaction()
-                            transaction.replace(R.id.fragment, settings)
-                            transaction.addToBackStack(null)
-                            transaction.commit()
+                            GitHubReposApplication.router.navigateTo(Screens.settings())
                         }
                 return true
             }

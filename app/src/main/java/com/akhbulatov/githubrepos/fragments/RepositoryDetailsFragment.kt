@@ -6,9 +6,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
+import com.akhbulatov.githubrepos.Screens
 import com.akhbulatov.githubrepos.databinding.FragmentRepositoryDetailsBinding
 import com.akhbulatov.githubrepos.models.Repository
 import com.akhbulatov.githubrepos.models.RepositoryDetails
@@ -30,7 +30,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
         binding!!.arrowBack.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.router.exit()
             }
         })
 
@@ -50,14 +50,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.linearLayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                val profileInfoFragment = ProfileInfoFragment.createFragment(repositoryDetails)
-
-                val transaction: FragmentTransaction =
-                    requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment, profileInfoFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
-
+                GitHubReposApplication.router.navigateTo(Screens.profileInfo(repositoryDetails))
             }
         })
 
