@@ -1,6 +1,5 @@
 package com.akhbulatov.githubrepos.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -28,20 +27,16 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRepositoryDetailsBinding.bind(view)
 
-        binding!!.arrowBack.setNavigationOnClickListener(object : View.OnClickListener {
+        binding!!.toolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 GitHubReposApplication.router.exit()
             }
         })
 
-        binding!!.arrowBack.setOnMenuItemClickListener(object:Toolbar.OnMenuItemClickListener{
+        binding!!.toolbar.setOnMenuItemClickListener(object:Toolbar.OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.share==item.itemId){
-                    val intent = Intent()
-                    intent.setAction(Intent.ACTION_SEND)
-                    intent.setType("text/plain")
-                    intent.putExtra(Intent.EXTRA_TEXT,repositoryDetails!!.link)
-                    requireActivity().startActivity(intent)
+                    GitHubReposApplication.router.navigateTo(Screens.share(repositoryDetails!!.link))
                 }
                 return true
             }
@@ -72,7 +67,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
                         .load(repositoryDetails!!.owner.avatar)
                         .into(binding!!.avatar)
 
-                    binding!!.arrowBack.setTitle(repositoryDetails!!.name)
+                    binding!!.toolbar.setTitle(repositoryDetails!!.name)
 
                     binding!!.name.setText(repositoryDetails!!.name)
 
