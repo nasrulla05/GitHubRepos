@@ -5,25 +5,27 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.adapters.FavoritesAuthorsAdapter
 import com.akhbulatov.githubrepos.databinding.FragmentFeaturedAuthorsBinding
 import com.akhbulatov.githubrepos.models.FavoritesAuthors
-import com.akhbulatov.githubrepos.network.FavoritesAuthorsDao
+import com.akhbulatov.githubrepos.viewModel.FeaturedAuthorsViewModel
 
 class FeaturedAuthorsFragment : Fragment(R.layout.fragment_featured_authors) {
-    var binding : FragmentFeaturedAuthorsBinding? = null
-    val authorsDao: FavoritesAuthorsDao = GitHubReposApplication.appDatabase.authorsDao()
-    val list = authorsDao.getAllAuthors()
+    val viewModel: FeaturedAuthorsViewModel by lazy {
+        ViewModelProvider(this).get(FeaturedAuthorsViewModel::class.java)
+    }
+    var binding: FragmentFeaturedAuthorsBinding? = null
 
 
     val authorsAdapter = FavoritesAuthorsAdapter(
         itemAuthorsListener = object : FavoritesAuthorsAdapter.AuthorsListener {
             override fun onDelete(authors: FavoritesAuthors) {
-                authorsDao.deleteAuthors(authors)
-                updateAuthorsList()
+                viewModel.onDelete(authors)
             }
         }
     )
@@ -43,7 +45,6 @@ class FeaturedAuthorsFragment : Fragment(R.layout.fragment_featured_authors) {
         val dividerAuthors = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding!!.authorsRecycleView.addItemDecoration(dividerAuthors)
 
-        updateAuthorsList()
 
         binding!!.authorSearch.addTextChangedListener(object : TextWatcher {
 
@@ -61,22 +62,25 @@ class FeaturedAuthorsFragment : Fragment(R.layout.fragment_featured_authors) {
                 before: Int,
                 count: Int
             ) { // Вызывается ВО время изменения текста
-                val listAuthors =
-                    list.filter { author: FavoritesAuthors -> author.fullName.contains(s, true) }
-                authorsAdapter.authors = listAuthors
-                authorsAdapter.notifyDataSetChanged()
+//                val listAuthors =
+//                    list.filter { author: FavoritesAuthors -> author.fullName.contains(s, true) }
+//                authorsAdapter.authors = listAuthors
+//                authorsAdapter.notifyDataSetChanged()
             }
 
             override fun afterTextChanged(s: Editable?) {
                 // Вызывается ПОСЛЕ изменения текста
             }
         })
-    }
 
-    private fun updateAuthorsList() {
-        val authorsList: List<FavoritesAuthors> = authorsDao.getAllAuthors()
-        authorsAdapter.authors = authorsList
-        authorsAdapter.notifyDataSetChanged()
+        viewModel.authorsListLiveData.observe(viewLifecycleOwner,object :Observer<List<FavoritesAuthors>>{
+            override fun onChanged(t: List<FavoritesAuthors>) {
+                authorsAdapter.authors = t
+                authorsAdapter.notifyDataSetChanged()
+            }
+        })
+
+        viewModel.loadAuthors()
     }
 
     override fun onDestroyView() {
