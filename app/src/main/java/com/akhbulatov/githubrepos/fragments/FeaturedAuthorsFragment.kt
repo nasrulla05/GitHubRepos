@@ -62,10 +62,7 @@ class FeaturedAuthorsFragment : Fragment(R.layout.fragment_featured_authors) {
                 before: Int,
                 count: Int
             ) { // Вызывается ВО время изменения текста
-//                val listAuthors =
-//                    list.filter { author: FavoritesAuthors -> author.fullName.contains(s, true) }
-//                authorsAdapter.authors = listAuthors
-//                authorsAdapter.notifyDataSetChanged()
+                viewModel.afterTextChanged(s.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {

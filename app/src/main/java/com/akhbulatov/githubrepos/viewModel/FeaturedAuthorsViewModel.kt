@@ -15,15 +15,17 @@ class FeaturedAuthorsViewModel: ViewModel() {
 
     fun onDelete(authors: FavoritesAuthors){
         authorsDao.deleteAuthors(authors = authors)
-        val authorsList: List<FavoritesAuthors> = authorsDao.getAllAuthors()
-        authorsListLiveData.value = authorsList
+       loadAuthors()
     }
 
     fun loadAuthors(){
         val authorsList: List<FavoritesAuthors> = authorsDao.getAllAuthors()
         authorsListLiveData.value = authorsList
-
     }
 
-
+    fun afterTextChanged(s:String){
+        val listAuthors =
+                   list.filter { author: FavoritesAuthors -> author.fullName.contains(s, true) }
+        authorsListLiveData.value = listAuthors
+    }
 }
