@@ -1,6 +1,7 @@
 package com.akhbulatov.githubrepos
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.akhbulatov.githubrepos.database.AppDatabase
 import com.akhbulatov.githubrepos.network.GitHubService
@@ -14,6 +15,8 @@ import retrofit2.create
 class GitHubReposApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        context = this.applicationContext
+
         appDatabase = Room.databaseBuilder(
             this,
             AppDatabase::class.java,
@@ -34,6 +37,7 @@ class GitHubReposApplication : Application() {
     }
 
     companion object {
+        lateinit var context:Context
         lateinit var appDatabase: AppDatabase
         lateinit var gitHubService: GitHubService
 
