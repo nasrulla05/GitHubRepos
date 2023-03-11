@@ -1,5 +1,6 @@
 package com.akhbulatov.githubrepos.viewModel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.akhbulatov.githubrepos.GitHubReposApplication
@@ -15,6 +16,7 @@ class RepositoriesViewModel:ViewModel() {
     val progressBarLiveData = MutableLiveData<Boolean>()
     val errorLiveData = MutableLiveData<Throwable>()
     val repositoriesLiveData = MutableLiveData<List<Repository>>()
+    val repositoriesEditor = MutableLiveData<String>()
 
 
     fun loadRepositories(){
@@ -32,6 +34,13 @@ class RepositoriesViewModel:ViewModel() {
                     repositoriesLiveData.value = repositoriesList
                 }
             }
+            val sharedPreferences = GitHubReposApplication.context.getSharedPreferences(
+                "git_hub_preferences",
+                Context.MODE_PRIVATE
+            )
+
+            val repositoriesEditor:String?= sharedPreferences.getString("repositories",null)
+
 
             override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
                 progressBarLiveData.value = false

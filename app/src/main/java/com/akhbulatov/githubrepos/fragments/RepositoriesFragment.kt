@@ -103,6 +103,7 @@ class RepositoriesFragment : Fragment(R.layout.fragment_repositories) {
             snackbar.show()
         }
         viewModel.loadRepositories()
+
     }
 
     override fun onDestroyView() {
