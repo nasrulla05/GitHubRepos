@@ -3,9 +3,9 @@ package com.akhbulatov.githubrepos.fragments
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.databinding.FragmentProfileInfoBinding
@@ -13,18 +13,17 @@ import com.akhbulatov.githubrepos.models.FavoritesAuthors
 import com.akhbulatov.githubrepos.models.ProfileInfo
 import com.akhbulatov.githubrepos.models.RepositoryDetails
 import com.akhbulatov.githubrepos.network.FavoritesAuthorsDao
+import com.akhbulatov.githubrepos.viewModel.ProfileInfoViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileInfoFragment :
     Fragment(R.layout.fragment_profile_info) {
     var binding : FragmentProfileInfoBinding? = null
-
-    lateinit var getInfoAboutDetails: Call<ProfileInfo>
-    var responseInfo: ProfileInfo? = null
+    val viewModel:ProfileInfoViewModel by lazy {
+        ViewModelProvider(this).get(ProfileInfoViewModel::class.java)
+    }
+    var profileInfo: ProfileInfo? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,9 +38,9 @@ class ProfileInfoFragment :
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.favorites == item.itemId) {
                     val authors = FavoritesAuthors(
-                        responseInfo!!.avatarAva,
-                        responseInfo!!.fullName,
-                        responseInfo!!.login
+                        profileInfo!!.avatarAva,
+                        profileInfo!!.fullName,
+                        profileInfo!!.login
                     )
                     val authorsDao: FavoritesAuthorsDao =
                         GitHubReposApplication.appDatabase.authorsDao()
@@ -59,52 +58,41 @@ class ProfileInfoFragment :
         })
 
         val repositoryLogin: String = requireArguments().getString(ARGUMENT_LOGIN, "")
-        getInfoAboutDetails =
-            GitHubReposApplication.gitHubService.getInfoUser(repositoryLogin)
+        viewModel.profileInfoLiveData.observe(viewLifecycleOwner) { t ->
+            profileInfo = t
+            Glide.with(this@ProfileInfoFragment)
+                .load(profileInfo!!.avatarAva)
+                .into(binding!!.avatar60)
 
-        getInfoAboutDetails.enqueue(object : Callback<ProfileInfo> {
-            override fun onResponse(
-                call: Call<ProfileInfo>,
-                response: Response<ProfileInfo>
-            ) {
-                responseInfo = response.body()
+            binding!!.arrowBackToolbar.setTitle(t.login)
 
-                if (responseInfo != null) {
-                    val avatar: ImageView = view.findViewById(R.id.avatar_60)
-                    Glide.with(this@ProfileInfoFragment)
-                        .load(responseInfo!!.avatarAva)
-                        .into(avatar)
+            binding!!.fullName.setText(t.fullName)
 
-                    binding!!.arrowBackToolbar.setTitle(responseInfo!!.login)
+            binding!!.login.setText(t.login)
 
-                    binding!!.fullName.setText(responseInfo!!.fullName)
+            binding!!.bio.setText(t.bio)
 
-                    binding!!.login.setText(responseInfo!!.login)
+            binding!!.location.setText(t.location)
 
-                    binding!!.bio.setText(responseInfo!!.bio)
+            binding!!.gmail.setText(t.email)
 
-                    binding!!.location.setText(responseInfo!!.location)
+            binding!!.followers.setText("Подписчики: ${t.followers}")
 
-                    binding!!.gmail.setText(responseInfo!!.email)
+            binding!!.following.setText("Подписки: ${t.following}")
 
-                    binding!!.followers.setText("Подписчики: ${responseInfo!!.followers}")
+            binding!!.publicRepos.setText(t.public_repos.toString())
+        }
 
-                    binding!!.following.setText("Подписки: ${responseInfo!!.following}")
+        viewModel.failureLiveData.observe(viewLifecycleOwner){t->
+            val error:Snackbar = Snackbar.make(
+                requireView(),
+                t,
+                Snackbar.LENGTH_LONG
+            )
+            error.show()
+        }
 
-                    binding!!.publicRepos.setText(responseInfo!!.public_repos.toString())
-
-                }
-            }
-
-            override fun onFailure(call: Call<ProfileInfo>, t: Throwable) {
-                val snackbar: Snackbar = Snackbar.make(
-                    requireView(),
-                    t.message!!,
-                    Snackbar.LENGTH_LONG
-                )
-                snackbar.show()
-            }
-        })
+        viewModel.loadRepositoriesLogin(repositoryLogin)
     }
 
     override fun onDestroyView() {
