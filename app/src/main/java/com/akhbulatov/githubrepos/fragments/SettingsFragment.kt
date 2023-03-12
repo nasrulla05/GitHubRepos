@@ -28,17 +28,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 GitHubReposApplication.router.exit()
             }
         })
-        viewModel.repositoriesEditor()
 
-        viewModel.repositoriesLiveData.observe(viewLifecycleOwner){t->
-            binding!!.repositories.setText(t)
-        }
+
 
         binding!!.save.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 saveSettings()
             }
         })
+        viewModel.repositoriesEditor()
+        viewModel.repositoriesLiveData.observe(viewLifecycleOwner){t->
+            binding!!.repositories.setText(t)
+        }
 
         viewModel.loadSaveSettings()
     }

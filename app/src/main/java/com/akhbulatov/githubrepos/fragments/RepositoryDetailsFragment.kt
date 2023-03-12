@@ -45,7 +45,6 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
         binding!!.linearLayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
                 GitHubReposApplication.router.navigateTo(Screens.profileInfo(repositoryDetails))
             }
         })
