@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.akhbulatov.githubrepos.GitHubReposApplication
 import com.akhbulatov.githubrepos.R
 import com.akhbulatov.githubrepos.databinding.FragmentProfileInfoBinding
-import com.akhbulatov.githubrepos.models.FavoritesAuthors
 import com.akhbulatov.githubrepos.models.ProfileInfo
 import com.akhbulatov.githubrepos.models.RepositoryDetails
-import com.akhbulatov.githubrepos.network.FavoritesAuthorsDao
 import com.akhbulatov.githubrepos.viewModel.ProfileInfoViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -37,14 +35,7 @@ class ProfileInfoFragment :
         binding!!.arrowBackToolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 if (R.id.favorites == item.itemId) {
-                    val authors = FavoritesAuthors(
-                        profileInfo!!.avatarAva,
-                        profileInfo!!.fullName,
-                        profileInfo!!.login
-                    )
-                    val authorsDao: FavoritesAuthorsDao =
-                        GitHubReposApplication.appDatabase.authorsDao()
-                    authorsDao.insertAuthors(authors)
+                  viewModel.onFavoritesAuthorsClick()
 
                     val snackbar : Snackbar = Snackbar.make(
                         view,
