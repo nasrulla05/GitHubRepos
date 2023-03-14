@@ -29,8 +29,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         })
 
-
-
         binding!!.save.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 saveSettings()
@@ -41,10 +39,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             binding!!.repositories.setText(t)
         }
 
-        viewModel.loadSaveSettings()
     }
 
     private fun saveSettings() {
+        viewModel.saveSettingsClick()
 
         val snackbar = Snackbar.make(
             requireView(),
