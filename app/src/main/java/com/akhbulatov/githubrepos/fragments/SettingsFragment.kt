@@ -34,7 +34,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 saveSettings()
             }
         })
-        viewModel.repositoriesEditor()
+        viewModel.loadRepositoriesEditor()
         viewModel.repositoriesLiveData.observe(viewLifecycleOwner){t->
             binding!!.repositories.setText(t)
         }

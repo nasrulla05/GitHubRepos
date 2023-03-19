@@ -3,23 +3,22 @@ package com.akhbulatov.githubrepos.network
 import com.akhbulatov.githubrepos.models.ProfileInfo
 import com.akhbulatov.githubrepos.models.Repository
 import com.akhbulatov.githubrepos.models.RepositoryDetails
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface GitHubService {
     @GET("users/{login}")
-    fun getInfoUser(
+    suspend fun getInfoUser(
         @Path("login") repositoryLogin : String
-    ): Call<ProfileInfo>
+    ): ProfileInfo
 
     @GET("repositories/{id}")
-    fun getRepositoriesDetails(
+    suspend fun getRepositoriesDetails(
         @Path("id") repositoryId: Int
-    ): Call<RepositoryDetails>
+    ): RepositoryDetails
 
     @GET("repositories")
-    fun getRepositories(
+    suspend fun getRepositories(
 
-    ): Call<List<Repository>>
+    ): List<Repository>
 }
