@@ -22,9 +22,9 @@ class RepositoriesViewModel : ViewModel() {
                 progressBarLiveData.value = false
                 val repositoriesList: List<Repository> =
                     GitHubReposApplication.gitHubService.getRepositories()
-                // Получить кол-во отображаемых репозиториев из настроек
                 repositoriesLiveData.value = repositoriesList
 
+                // Получить кол-во отображаемых репозиториев из настроек
                 val sharedPreferences = GitHubReposApplication.context.getSharedPreferences(
                     "git_hub_preferences",
                     Context.MODE_PRIVATE

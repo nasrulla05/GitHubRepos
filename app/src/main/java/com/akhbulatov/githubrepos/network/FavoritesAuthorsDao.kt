@@ -6,7 +6,7 @@ import com.akhbulatov.githubrepos.models.FavoritesAuthors
 @Dao
 interface FavoritesAuthorsDao {
     @Query("select*from favorites_authors_table")
-     fun getAllAuthors(): List<FavoritesAuthors>
+     suspend fun getAllAuthors(): List<FavoritesAuthors>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAuthors(authors: FavoritesAuthors)

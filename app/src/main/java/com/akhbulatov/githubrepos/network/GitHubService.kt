@@ -18,7 +18,5 @@ interface GitHubService {
     ): RepositoryDetails
 
     @GET("repositories")
-    suspend fun getRepositories(
-
-    ): List<Repository>
+    suspend fun getRepositories(): List<Repository>
 }

@@ -12,7 +12,6 @@ class FeaturedAuthorsViewModel: ViewModel() {
     val authorsListLiveData = MutableLiveData<List<FavoritesAuthors>>()
 
     val authorsDao: FavoritesAuthorsDao = GitHubReposApplication.appDatabase.authorsDao()
-    val list = authorsDao.getAllAuthors()
 
 
     fun onDelete(authors: FavoritesAuthors){
@@ -23,13 +22,19 @@ class FeaturedAuthorsViewModel: ViewModel() {
     }
 
     fun loadAuthors() {
+        viewModelScope.launch {
             val authorsList: List<FavoritesAuthors> = authorsDao.getAllAuthors()
             authorsListLiveData.value = authorsList
+        }
     }
 
-    fun afterTextChanged(s:String){
-        val listAuthors =
-                   list.filter { author: FavoritesAuthors -> author.fullName.contains(s, true) }
-        authorsListLiveData.value = listAuthors
+    fun afterTextChanged(s:String) {
+        viewModelScope.launch {
+            val list = authorsDao.getAllAuthors()
+
+            val listAuthors =
+                list.filter { author: FavoritesAuthors -> author.fullName.contains(s, true) }
+            authorsListLiveData.value = listAuthors
+        }
     }
 }
