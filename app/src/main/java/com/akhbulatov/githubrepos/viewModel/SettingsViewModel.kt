@@ -10,21 +10,20 @@ class SettingsViewModel:ViewModel() {
 
     val repositoriesLiveData = MutableLiveData<String>()
 
+    val sharedPreferences = GitHubReposApplication.context.getSharedPreferences(
+        "git_hub_preferences",
+        Context.MODE_PRIVATE
+    )
+
     fun loadRepositoriesEditor(){
-        val sharedPreferences = GitHubReposApplication.context.getSharedPreferences(
-            "git_hub_preferences",
-            Context.MODE_PRIVATE
-        )
-        val repositoriesEditor: String =
+
+        val repositoriesNumber: String =
             sharedPreferences.getString("repositories", null)!!
-        repositoriesLiveData.value = repositoriesEditor
+        repositoriesLiveData.value = repositoriesNumber
     }
 
     fun saveSettingsClick(){
-        val sharedPreferences = GitHubReposApplication.context.getSharedPreferences(
-            "git_hub_preferences",
-            Context.MODE_PRIVATE
-        )
+
         val repositoriesList = repositoriesLiveData.value.toString()
 
         val editor: SharedPreferences.Editor = sharedPreferences.edit()

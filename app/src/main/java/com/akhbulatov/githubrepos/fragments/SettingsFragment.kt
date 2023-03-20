@@ -2,7 +2,6 @@ package com.akhbulatov.githubrepos.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.akhbulatov.githubrepos.GitHubReposApplication
@@ -16,12 +15,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     val viewModel:SettingsViewModel by lazy {
         ViewModelProvider(this).get(SettingsViewModel::class.java)
     }
-    lateinit var repositories:EditText
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSettingsBinding.bind(view)
-        repositories = view.findViewById(R.id.repositories)
 
         binding!!.settingsToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
